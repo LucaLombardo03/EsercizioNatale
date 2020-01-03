@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EsercizioNatale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="386.431" Width="549.071">
+    <Grid Background="#FF9EF36D">
+        <Label Content="LISTA VOTI" HorizontalAlignment="Left" Height="42" Margin="60,25,0,0" VerticalAlignment="Top" Width="181" FontWeight="Bold" FontSize="24" FontFamily="Gill Sans Ultra Bold" Background="#FFFFC96C"/>
+        <ListBox HorizontalAlignment="Left" Height="238" Margin="60,82,0,0" VerticalAlignment="Top" Width="181"/>
+        <Label Content="VOTO PIU' ALTO" HorizontalAlignment="Left" Height="31" Margin="308,30,0,0" VerticalAlignment="Top" Width="154" FontFamily="Perpetua Titling MT" FontSize="16" Background="#FF66EAD2" RenderTransformOrigin="-0.136,1.09">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.455"/>
+                    <TranslateTransform X="-0.142" Y="-0.779"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Content="" HorizontalAlignment="Left" Height="31" Margin="309,82,0,0" VerticalAlignment="Top" Width="155"/>
+        <Button Content="VOTO PIU' ALTO" HorizontalAlignment="Left" Height="38" Margin="309,162,0,0" VerticalAlignment="Top" Width="155"/>
+
     </Grid>
 </Window>
