@@ -24,31 +24,42 @@ namespace EsercizioNatale
         private const string file = "file.txt";
         private const string file_valido = "FileValido.txt";
         private const string file_invalido = "FileInvalido.txt";
+        
         public MainWindow()
         {
             InitializeComponent();
         }
-
-        private void ReadFile()
+        private void Vedi_Click(object sender, RoutedEventArgs e)
         {
+            int result = Convert.ToInt32(file.Substring(file.LastIndexOf(',') + 1));
             if (File.Exists(file))
-            {    
-                try
+            {
+                StreamReader r = new StreamReader(file, Encoding.UTF8);
+                var sLine = "";
+                while (sLine != null)
                 {
-                    using (StreamReader r = new StreamReader(file, Encoding.UTF8))
+                    sLine = r.ReadLine();
+                    if (sLine != null)
                     {
-                        string line;
-                        while ((line = r.ReadLine()) != null)
+                        if (!LstVoti.Items.Contains(sLine))
                         {
-                            lblresult.Content=(line);
+                            LstVoti.Items.Add(sLine);
                         }
                     }
                 }
-                catch
-                {
+                r.Close();
+            }
+            //double max = 0;
+            // c = 0;
+            //do
+            //{
+               // if (result > max)
+               // {
+                   // max = result;
+               //     c++;
+             //   }
+            //} while (c >= n);
 
-                }
-            }   
         }
     }
-}
+}     
