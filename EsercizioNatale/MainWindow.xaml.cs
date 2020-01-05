@@ -21,9 +21,10 @@ namespace EsercizioNatale
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string file = "file.txt";
-        private const string file_valido = "FileValido.txt";
-        private const string file_invalido = "FileInvalido.txt";
+        private const string filenomivoti = @"filenomivoti.txt";
+        private const string filevoti = @"filevoti.txt";
+        private const string file_valido = @"FileValido.txt";
+        private const string file_invalido = @"FileInvalido.txt";
         
         public MainWindow()
         {
@@ -31,23 +32,53 @@ namespace EsercizioNatale
         }
         private void Vedi_Click(object sender, RoutedEventArgs e)
         {
-            int result = Convert.ToInt32(file.Substring(file.LastIndexOf(',') + 1));
-            if (File.Exists(file))
+            using (StreamReader rfile = new StreamReader(filenomivoti))
             {
-                StreamReader r = new StreamReader(file, Encoding.UTF8);
-                var sLine = "";
-                while (sLine != null)
+                using (StreamWriter wvoti = new StreamWriter(filevoti))
                 {
-                    sLine = r.ReadLine();
-                    if (sLine != null)
+                    string sline = rfile.ReadLine();
+                    while ((sline = rfile.ReadLine()) != null)
                     {
-                        if (!LstVoti.Items.Contains(sLine))
+                        int found = 0;
+                        Console.WriteLine(sline);
                         {
-                            LstVoti.Items.Add(sLine);
+                            found = sline.IndexOf(",");
+                            wvoti.WriteLine("{0}", sline.Substring(found + 1));
                         }
                     }
                 }
-                r.Close();
+                using (StreamReader readvoti = new StreamReader(filevoti))
+                {
+                    string linevoti = readvoti.ReadLine();
+                    double max = 0;
+                    double a = double.Parse(linevoti);
+                    while ((linevoti = readvoti.ReadLine()) != null)
+                    {
+                        if (a > 0 && a <= 10 && a > max)
+                        {
+                            max = a;
+                        }
+                    }
+                    LblMax.Content = (max);
+                }
+            }
+                /*using (StreamReader readfile = new StreamReader(filenomivoti)) 
+                {
+                    string sline = readfile.ReadLine();
+                    while (sLine != null)
+                    {
+                        sLine = file.ReadLine();
+                        if (sLine != null)
+                        {
+                            if (!LstVoti.Items.Contains(sLine))
+                            {
+                                LstVoti.Items.Add(sLine);
+                            }
+                        }
+                    }
+                    file.Close();
+                }      
+                
             }
             //double max = 0;
             // c = 0;
@@ -58,7 +89,7 @@ namespace EsercizioNatale
                    // max = result;
                //     c++;
              //   }
-            //} while (c >= n);
+            //} while (c >= n);*/
 
         }
     }
