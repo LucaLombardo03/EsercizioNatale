@@ -23,8 +23,9 @@ namespace EsercizioNatale
     {
         private const string filenomivoti = @"filenomivoti.txt";
         private const string filevoti = @"filevoti.txt";
-        private const string file_valido = @"FileValido.txt";
-        private const string file_invalido = @"FileInvalido.txt";
+        private const string filenomi = @"filenomi.txt";
+        private const string file_valido = @"fileValido.txt";
+        private const string file_invalido = @"fileInvalido.txt";
         
         public MainWindow()
         {
@@ -32,6 +33,7 @@ namespace EsercizioNatale
         }
         private void Vedi_Click(object sender, RoutedEventArgs e)
         {
+            //divisione dei voti dal file
             using (StreamReader rfile = new StreamReader(filenomivoti))
             {
                 using (StreamWriter wvoti = new StreamWriter(filevoti))
@@ -47,50 +49,109 @@ namespace EsercizioNatale
                         }
                     }
                 }
-                using (StreamReader readvoti = new StreamReader(filevoti))
-                {
-                    string linevoti = readvoti.ReadLine();
-                    double max = 0;
-                    double a = double.Parse(linevoti);
-                    while ((linevoti = readvoti.ReadLine()) != null)
-                    {
-                        if (a > 0 && a <= 10 && a > max)
-                        {
-                            max = a;
-                        }
-                    }
-                    LblMax.Content = (max);
-                }
             }
-                /*using (StreamReader readfile = new StreamReader(filenomivoti)) 
+            //divisione dei nomi dal file
+            using (StreamReader rfile = new StreamReader(filenomivoti))
+            {
+                using (StreamWriter wnomi = new StreamWriter(filenomi))
                 {
-                    string sline = readfile.ReadLine();
-                    while (sLine != null)
+                    string wline = rfile.ReadLine();
+                    while ((wline = rfile.ReadLine()) != null)
                     {
-                        sLine = file.ReadLine();
-                        if (sLine != null)
+                        Console.WriteLine(wline);
                         {
-                            if (!LstVoti.Items.Contains(sLine))
+                            int posizione = wline.IndexOf(",");
+                            if (posizione >= 0)
                             {
-                                LstVoti.Items.Add(sLine);
+                                string found = wline.Remove(posizione);
+                                wnomi.WriteLine(found);
                             }
                         }
                     }
-                    file.Close();
-                }      
-                
+                }
             }
-            //double max = 0;
-            // c = 0;
-            //do
-            //{
-               // if (result > max)
-               // {
-                   // max = result;
-               //     c++;
-             //   }
-            //} while (c >= n);*/
+            //scrittura nel file dei voti validi
+            using (StreamReader readvoti = new StreamReader(filevoti))
+            {
+                string linevoti = readvoti.ReadLine();
 
+                using (StreamReader readnomi = new StreamReader(filenomi))
+                {
+                    string rline = readnomi.ReadLine();
+                    using (StreamWriter validi = new StreamWriter(file_valido))
+                    {
+                        while ((rline = readnomi.ReadLine()) != null)
+                        {
+                            string nome = rline;
+                            string virgola = ",";
+                            double n;
+                            n = double.Parse(linevoti);
+                            if (n < 0 || n > 10)
+                            {
+                                validi.WriteLine("");
+                            }
+                            else
+                            {
+                                validi.WriteLine($"{nome}{virgola}{n}");
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            //scrittura nel file dei voti invalidi
+            using (StreamReader readvoti = new StreamReader(filevoti))
+            {
+                string linevoti = readvoti.ReadLine();
+
+                using (StreamReader readnomi = new StreamReader(filenomi))
+                {
+                    string rline = readnomi.ReadLine();
+                    using (StreamWriter invalidivalidi = new StreamWriter(file_invalido))
+                    {
+                        while ((rline = readnomi.ReadLine()) != null)
+                        {
+                            string nome = rline;
+                            string virgola = ",";
+                            double n;
+                            n = double.Parse(linevoti);
+                            if (n > 0 || n < 10)
+                            {
+                                invalidivalidi.WriteLine("");
+                            }
+                            else
+                            {
+                                invalidivalidi.WriteLine($"{nome}{virgola}{n}");
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            //trovato il voto max
+            using (StreamReader readvoti = new StreamReader(filevoti))
+            {
+                string linevoti = readvoti.ReadLine();
+                double max = 0;
+                double a = double.Parse(linevoti);
+                while ((linevoti = readvoti.ReadLine()) != null)
+                {
+                    if (a > 0 && a <= 10 && a > max)
+                    {
+                        max = a;
+                    }
+                }
+                LblMax.Content = (max);
+            }
+            //scrittura file valido nella list box
+            using (StreamReader readvalidi = new StreamReader(file_valido))
+            {
+                string valido = readvalidi.ReadLine();
+                while ((valido = readvalidi.ReadLine()) != null)
+                {
+                    LstVoti.Items.Add(valido.ToString());
+                }
+            }
         }
     }
 }     
